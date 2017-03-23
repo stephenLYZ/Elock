@@ -1,0 +1,11 @@
+{
+  "name": "gesture-password",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/stephenLYao/gesture-password.git",
+  "author": "stephenliu <stephenlyao@yeah.net>",
+  "license": "MIT",
+  "devDependencies": {
+    "webpack": "^2.3.1"
+  }
+}
