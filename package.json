@@ -3,9 +3,29 @@
   "version": "1.0.0",
   "main": "index.js",
   "repository": "https://github.com/stephenLYao/gesture-password.git",
-  "author": "stephenliu <stephenlyao@yeah.net>",
+  "author": "stephenliu",
   "license": "MIT",
+  "scripts": {
+    "start": "babel-node -- server.js"
+  },
+  "dependencies": {
+    "jquery": "^3.2.1",
+    "lodash": "^4.17.4"
+  },
   "devDependencies": {
-    "webpack": "^2.3.1"
+    "babel-cli": "^6.24.0",
+    "babel-core": "^6.24.0",
+    "babel-loader": "^6.4.1",
+    "babel-preset-latest": "^6.24.0",
+    "babel-preset-stage-0": "^6.22.0",
+    "babel-runtime": "^6.23.0",
+    "css-loader": "^0.27.3",
+    "express": "^4.15.2",
+    "node-sass": "^4.5.1",
+    "sass-loader": "^6.0.3",
+    "style-loader": "^0.16.0",
+    "webpack": "^2.3.1",
+    "webpack-dev-middleware": "^1.10.1",
+    "webpack-hot-middleware": "^2.17.1"
   }
 }
