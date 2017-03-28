@@ -6,7 +6,7 @@ export default {
 	entry: {
 		app: [
 			'webpack-hot-middleware/client?reload=true&path=http://localhost:3000/__webpack_hmr',
-			'./src/index'
+			'./src/app'
 		],
 		vendor: ['jquery', 'lodash']
 	},

@@ -1,8 +1,8 @@
 {
-  "name": "gesture-password",
+  "name": "ELock",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "https://github.com/stephenLYao/gesture-password.git",
+  "repository": "https://github.com/stephenLYao/ELock",
   "author": "stephenliu",
   "license": "MIT",
   "scripts": {
