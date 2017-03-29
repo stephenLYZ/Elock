@@ -8,11 +8,11 @@ html, body {
 
 canvas {
 	display: block;
-	margin: 0 auto;
+	margin: 30px auto;
 }
 
 input:first-of-type {
-	margin-top: 100px;
+	margin-top: 90px;
 }
 
 input {
@@ -21,4 +21,10 @@ input {
 
 label {
 	font-size: 18px;
+}
+
+#flash {
+	line-height: 30px;
+	font-size: 15px;
+	min-height: 30px;
 }
