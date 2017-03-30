@@ -6,8 +6,8 @@
 class ELock {
 	constructor(options) {
 		this.options = options || {}
-		this.radius = options.radius || 20 // 半径
-		this.gap = options.gap || 20 // 间隔
+		this.radius = options.radius || 25 // 半径
+		this.gap = options.gap || 25 // 间隔
 		this.number = options.number || 3  // 行列个数
 		this.container = document.querySelector(options.container) || 'div'
 		this.circlesSize = this.radius + this.gap   //圆范围的大小
@@ -179,27 +179,21 @@ class ELock {
 	}
 	// 获取坐标
 	getCoord(e) {
-		let isTouch = document.hasOwnProperty("ontouchstart")
 		let rect = e.currentTarget.getBoundingClientRect()
-		e = isTouch ? e.touches[0] : e
 		let coord = {
-			x: e.clientX - rect.left,
-            y: e.clientY - rect.top
+			x: e.touches[0].clientX - rect.left,
+            y: e.touches[0].clientY - rect.top
 		}
 		return coord
 	}
 
 	bindEvents() {
-		let isTouch = document.hasOwnProperty("ontouchstart")  // 判断是否支持手机事件
-		let touchStart = isTouch ? 'touchstart' : 'mousedown'    // 点击
-		let touchMove = isTouch ? 'touchmove'  : 'mousemove'    // 拖动
-		let touchEnd = isTouch ? 'touchend'   : 'mouseup'    // 抬起
 		let canvas = document.getElementById('canvas')
 		let drawing = false
 		let tempCoord = {}
 		let that = this
 
-		canvas.addEventListener(touchStart, function(e) {
+		canvas.addEventListener('touchstart', function(e) {
 			e.preventDefault()
 			let coord = that.getCoord(e)
 			tempCoord = coord
@@ -210,39 +204,34 @@ class ELock {
 				that.circles[index].isChoosed = true
 				that.selectedRender()
 			}
-
-			canvas.addEventListener(touchMove, function(e) {
-				e.preventDefault()
-				if(!drawing) return
-				let coord = that.getCoord(e)
-				let index = that.checkInCircle(coord.x, coord.y)
-				that.selectedRender()
-				if(index === null || that.circles[index].isChoosed) {
-					let startX = tempCoord.x
-					let startY = tempCoord.y
-					let posX = coord.x
-					let posY = coord.y
-					that.drawMoveLine(startX, startY, posX, posY)
-				} else {
-					tempCoord.x = that.circles[index].x
-					tempCoord.y = that.circles[index].y
-					that.selected.push(index)
-					that.circles[index].isChoosed = true
-				}			
-			}, false)
-
-			canvas.addEventListener(touchEnd, function(e) {
-				e.preventDefault()
-				if(drawing) {
-					drawing = false
-					that.setPassword(that.selected)
-					setTimeout(function() {
-						that.reset()
-					}, 300)
-				}			
-			}, false)
-
-		}, false)	
+		}, false)
+		canvas.addEventListener('touchmove', function(e) {
+			if(!drawing) return
+			let coord = that.getCoord(e)
+			let index = that.checkInCircle(coord.x, coord.y)
+			that.selectedRender()
+			if(index === null || that.circles[index].isChoosed) {
+				let startX = tempCoord.x
+				let startY = tempCoord.y
+				let posX = coord.x
+				let posY = coord.y
+				that.drawMoveLine(startX, startY, posX, posY)
+			} else {
+				tempCoord.x = that.circles[index].x
+				tempCoord.y = that.circles[index].y
+				that.selected.push(index)
+				that.circles[index].isChoosed = true
+			}			
+		}, false)
+		canvas.addEventListener('touchend', function(e) {
+			if(drawing) {
+				drawing = false
+				that.setPassword(that.selected)
+				setTimeout(function() {
+					that.reset()
+				}, 300)
+			}			
+		}, false)
 	}
 	// 设置模式
 	setType() {
