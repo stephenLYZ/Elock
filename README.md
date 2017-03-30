@@ -2,14 +2,14 @@
 
 [demo]()
 
-<img width="380" alt="elock" src="https://cloud.githubusercontent.com/assets/11830681/24492054/8e223952-155c-11e7-87d7-bcf1b877eb46.png">
+<img width="380" alt="elock" src="http://7xl0rs.com1.z0.glb.clouddn.com/elock.gif">
 
 ## Usage
 
 ### develop
 
 ```
-$ npm i
+$ yarn install
 $ npm run start
 ```
 
