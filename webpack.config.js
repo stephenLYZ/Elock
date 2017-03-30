@@ -3,16 +3,13 @@ import path from 'path'
 
 export default {
 	devtool: 'source-map',
-	entry: {
-		app: [
-			'webpack-hot-middleware/client?reload=true&path=http://localhost:3000/__webpack_hmr',
-			'./src/app'
-		],
-		vendor: ['jquery', 'lodash']
-	},
+	entry: [
+		'webpack-hot-middleware/client?reload=true&path=http://localhost:3000/__webpack_hmr',
+		'./src/app'
+	],
 	output: {
 		path: path.join(__dirname, 'build'),
-		filename: '[name].js',
+		filename: 'ELock.js',
 		publicPath: 'http://localhost:3000/build/'
 	},
 	module: {

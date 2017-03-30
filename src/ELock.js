@@ -2,7 +2,6 @@
 // 
 // by stephen
 // 2017.3.27
-import $ from 'jquery'
 
 class ELock {
 	constructor(options) {
@@ -10,7 +9,7 @@ class ELock {
 		this.radius = options.radius || 20 // 半径
 		this.gap = options.gap || 20 // 间隔
 		this.number = options.number || 3  // 行列个数
-		this.container = $(options.container) || 'div'
+		this.container = document.querySelector(options.container) || 'div'
 		this.circlesSize = this.radius + this.gap   //圆范围的大小
 		this.size = options.size || (this.radius + this.gap) * 2 * this.number  // 画布的大小
 		this.lineColor = options.lineColor || "#E0494D"  // 线的颜色
@@ -34,9 +33,9 @@ class ELock {
 	// 渲染画布
 	renderContex() {
 		let el = document.createElement('div')
-		let tpl = "<h3 class='title'>请输入手势密码</h3>" + 
+		let tpl = "<h3 class='title'>ELock</h3>" + 
 				  `<canvas id='canvas' width=${this.size} height=${this.size}></canvas>` +
-				  "<div id='flash'></div>" +
+				  "<div id='flash'>请输入手势密码</div>" +
 				  "<input name='pwd' type='radio' value='set' id='set' checked> <label for='set'>设置密码</label> </br>" +
 				  "<input name='pwd' type='radio' value='auth' id='auth'> <label for='auth'>验证密码</label>"
 
@@ -247,40 +246,47 @@ class ELock {
 	}
 	// 设置模式
 	setType() {
+		let flash = document.querySelector('#flash')
 		let that = this
-		$('#set').on('click', function() {
+		document.querySelector('#set').addEventListener('click', function() {
+			flash.innerHTML = '请输入手势密码'
 			that.type = 1
 		})
 
-		$('#auth').on('click', function() {
+		document.querySelector('#auth').addEventListener('click', function() {
 			that.type = 2
+			flash.innerHTML = '请输入手势密码'
 		})
 		
 	}
 
 	// 设置/验证 密码
 	setPassword(pwd) {
+		let flash = document.querySelector('#flash')
 		if(this.type === 1) {
 			if(this.step === 1) {
 				if(this.checkPassword(this.password, pwd)) {
 					window.localStorage.removeItem('password')
-					$('#flash').innerHTML = '密码保存成功'
-					window.localStorage.setItem('password', JSON.stringify(this.spassword))
+					flash.innerHTML = '密码保存成功'
+					window.localStorage.setItem('password', JSON.stringify(this.password))
+					this.step = 2
 				} else {
-					$('#flash').innerHTML = '两次输入不一致'
+					flash.innerHTML = '两次输入不一致'
 					this.step = 2
 				}
+			} else if(pwd.length < 5){
+				flash.innerHTML = '密码不能少于5位'
 			} else {
 				this.step = 1
 				this.password = pwd
-				$('#flash').innerHTML = '请再次输入'
+				flash.innerHTML = '请再次输入'
 			}
 		} else {
-			let password = JSON.parse(window.localStorage.getItem('password'))
-			if(this.checkPassword(password, pwd)) {
-				$('#flash').innerHTML = '解锁成功'
+			let _pwd = JSON.parse(window.localStorage.getItem('password'))
+			if(this.checkPassword(_pwd, pwd)) {
+				flash.innerHTML = '解锁成功'
 			} else {
-				$('#flash').innerHTML = '解锁失败'
+				flash.innerHTML = '解锁失败'
 			}
 		}
 	}
@@ -293,11 +299,11 @@ class ELock {
 	checkPassword(p1, p2) {
 		let _p1 = ''
 		let _p2 = ''
-		for(let i of p1) {
-			_p1 += p1[i].index
+		for(let i = 0; i < p1.length; i++) {
+			_p1 += p1[i]
 		}
-		for(let i of p1) {
-			_p2 += p2[i].index
+		for(let i = 0; i < p2.length; i++) {
+			_p2 += p2[i]
 		}
 
 		return _p1 === _p2
